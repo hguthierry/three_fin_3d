@@ -1,0 +1,5 @@
+outputs
+openfoam
+multirun
+.bat
+__pycache__

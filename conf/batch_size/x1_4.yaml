@@ -1,0 +1,6 @@
+  Inlet: 125
+  Outlet: 125
+  NoSlip: 2500
+  InteriorLR: 500
+  InteriorHR: 500
+  IntegralContinuity: 2500

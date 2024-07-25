@@ -1,0 +1,6 @@
+Inlet: 500
+Outlet: 500
+NoSlip: 10000
+InteriorLR: 2000
+InteriorHR: 2000
+IntegralContinuity: 10000
