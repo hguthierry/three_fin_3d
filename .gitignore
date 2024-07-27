@@ -1,5 +1,5 @@
 outputs
 openfoam
 multirun
-.bat
+*.bat
 __pycache__

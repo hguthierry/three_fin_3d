@@ -12,20 +12,23 @@ class SliceValidatorPlotter(ValidatorPlotter):
 
         # get input variables
         x,y,z = invar["x"][:,0], invar["y"][:,0], invar["z"][:,0]
-        bool_array = z < 0
-        x = x[bool_array]
-        y = y[bool_array]
 
-        extent = (x.min(), x.max(), y.min(), y.max())
+        bool_array = (y == 0.06565)
+
+        x = x[bool_array]
+        z = z[bool_array]
+
+        extent = (x.min(), x.max(), z.min(), z.max())
 
         # get and interpolate output variable
         u_true, u_pred = true_outvar["u"][:,0], pred_outvar["u"][:,0]
         u_true = u_true[bool_array]
         u_pred = u_pred[bool_array]
-        u_true, u_pred = self.interpolate_output(x, y,
+        u_true, u_pred = self.interpolate_output(x, z,
                                                 [u_true, u_pred],
                                                 extent,
         )
+
 
         # make plot
         f = plt.figure(figsize=(14,4), dpi=100)
@@ -33,7 +36,7 @@ class SliceValidatorPlotter(ValidatorPlotter):
         plt.subplot(1,3,1)
         plt.title("True solution (u)")
         plt.imshow(u_true.T, origin="lower", extent=extent, vmin=-0.2, vmax=1)
-        plt.xlabel("x"); plt.ylabel("y")
+        plt.xlabel("x"); plt.ylabel("z")
         plt.colorbar()
         plt.vlines(-0.05, -0.05, 0.05, color="k", lw=10, label="No slip boundary")
         plt.vlines( 0.05, -0.05, 0.05, color="k", lw=10)
@@ -42,19 +45,19 @@ class SliceValidatorPlotter(ValidatorPlotter):
         plt.subplot(1,3,2)
         plt.title("PINN solution (u)")
         plt.imshow(u_pred.T, origin="lower", extent=extent, vmin=-0.2, vmax=1)
-        plt.xlabel("x"); plt.ylabel("y")
+        plt.xlabel("x"); plt.ylabel("z")
         plt.colorbar()
         plt.subplot(1,3,3)
         plt.title("Difference")
         plt.imshow((u_true-u_pred).T, origin="lower", extent=extent, vmin=-0.2, vmax=1)
-        plt.xlabel("x"); plt.ylabel("y")
+        plt.xlabel("x"); plt.ylabel("z")
         plt.colorbar()
         plt.tight_layout()
 
         return [(f, "custom_plot"),]
 
     @staticmethod
-    def interpolate_output(x, y, us, extent):
+    def interpolate_output(x, z, us, extent):
         "Interpolates irregular points onto a mesh"
 
         # define mesh to interpolate onto
@@ -66,7 +69,7 @@ class SliceValidatorPlotter(ValidatorPlotter):
 
         # linearly interpolate points onto mesh
         us = [scipy.interpolate.griddata(
-            (x, y), u, tuple(xyi)
+            (x, z), u, tuple(xyi)
             )
             for u in us]
 
