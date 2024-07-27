@@ -44,6 +44,7 @@ from modulus.sym.eq.pdes.basic import NormalDotVec, GradNormal
 from modulus.sym.eq.pdes.diffusion import Diffusion, DiffusionInterface
 from modulus.sym.eq.pdes.advection_diffusion import AdvectionDiffusion
 from modulus.sym.models.fully_connected import FullyConnectedArch
+from slice_validator import SliceValidatorPlotter
 
 from three_fin_geometry import *
 
@@ -261,6 +262,7 @@ def run(cfg: ModulusConfig) -> None:
             nodes=flow_nodes,
             invar=openfoam_invar_numpy,
             true_outvar=openfoam_outvar_numpy,
+            plotter=SliceValidatorPlotter()
         )
         flow_domain.add_validator(openfoam_validator)
     else:

@@ -1,0 +1,6 @@
+Inlet: 10
+Outlet: 10
+NoSlip: 10
+InteriorLR: 10
+InteriorHR: 10
+IntegralContinuity: 10
