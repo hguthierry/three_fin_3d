@@ -13,7 +13,7 @@ class SliceValidatorPlotter(ValidatorPlotter):
         # get input variables
         x,y,z = invar["x"][:,0], invar["y"][:,0], invar["z"][:,0]
 
-        bool_array = (y == 0.06565)
+        bool_array = ((y > 0.06) < 0.07)
 
         x = x[bool_array]
         z = z[bool_array]
@@ -29,27 +29,32 @@ class SliceValidatorPlotter(ValidatorPlotter):
                                                 extent,
         )
 
+        vmin_true= u_true.min()
+        vmax_true = u_true.max()
+        vmin_pred= u_pred.min()
+        vmax_pred = u_pred.max()
+
 
         # make plot
         f = plt.figure(figsize=(14,4), dpi=100)
-        plt.suptitle("Lid driven cavity: PINN vs true solution")
+        plt.suptitle("Three Fin Flow: PINN vs true solution")
         plt.subplot(1,3,1)
         plt.title("True solution (u)")
-        plt.imshow(u_true.T, origin="lower", extent=extent, vmin=-0.2, vmax=1)
+        plt.imshow(u_true.T, origin="lower", extent=extent, vmin=-0.5, vmax=2.2)
         plt.xlabel("x"); plt.ylabel("z")
         plt.colorbar()
-        plt.vlines(-0.05, -0.05, 0.05, color="k", lw=10, label="No slip boundary")
-        plt.vlines( 0.05, -0.05, 0.05, color="k", lw=10)
-        plt.hlines(-0.05, -0.05, 0.05, color="k", lw=10)
-        plt.legend(loc="lower right")
+        #plt.vlines(-0.05, -0.05, 0.05, color="k", lw=10, label="No slip boundary")
+        #plt.vlines( 0.05, -0.05, 0.05, color="k", lw=10)
+        #plt.hlines(-0.05, -0.05, 0.05, color="k", lw=10)
+        #plt.legend(loc="lower right")
         plt.subplot(1,3,2)
         plt.title("PINN solution (u)")
-        plt.imshow(u_pred.T, origin="lower", extent=extent, vmin=-0.2, vmax=1)
+        plt.imshow(u_pred.T, origin="lower", extent=extent, vmin=-0.5, vmax=2.2)
         plt.xlabel("x"); plt.ylabel("z")
         plt.colorbar()
         plt.subplot(1,3,3)
         plt.title("Difference")
-        plt.imshow((u_true-u_pred).T, origin="lower", extent=extent, vmin=-0.2, vmax=1)
+        plt.imshow((u_true-u_pred).T, origin="lower", extent=extent, vmin=-2.2, vmax=2.2)
         plt.xlabel("x"); plt.ylabel("z")
         plt.colorbar()
         plt.tight_layout()
