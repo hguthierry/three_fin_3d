@@ -13,7 +13,7 @@ class SliceValidatorPlotter(ValidatorPlotter):
         # get input variables
         x,y,z = invar["x"][:,0], invar["y"][:,0], invar["z"][:,0]
 
-        bool_array = ((y > 0.06) < 0.07)
+        bool_array = ((y > 0.065) < 0.067)
 
         x = x[bool_array]
         z = z[bool_array]
@@ -67,8 +67,8 @@ class SliceValidatorPlotter(ValidatorPlotter):
 
         # define mesh to interpolate onto
         xyi = np.meshgrid(
-            np.linspace(extent[0], extent[1], 100),
-            np.linspace(extent[2], extent[3], 100),
+            np.linspace(extent[0], extent[1], 1000),
+            np.linspace(extent[2], extent[3], 1000),
             indexing="ij",
         )
 
