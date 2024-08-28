@@ -1,0 +1,8 @@
+  Inlet: 250
+  Outlet: 250
+  ChannelWalls: 250
+  SolidInterface: 250
+  HeatSource: 2500
+  InteriorLR: 500
+  InteriorHR: 500
+  SolidInterior: 500
